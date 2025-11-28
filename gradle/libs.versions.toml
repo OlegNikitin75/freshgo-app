@@ -18,6 +18,8 @@ koinKspCompiler = "2.3.1"
 kotlinxCoroutinesAndroid = "1.10.2"
 google = "4.4.3"
 serialization = "1.9.0"
+navigationCompose = "2.9.6"
+foundationLayout = "1.9.5"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -53,6 +55,8 @@ kotlinx-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-
 
 # Coroutines
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinxCoroutinesAndroid" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
