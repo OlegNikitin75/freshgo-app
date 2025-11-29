@@ -1,5 +1,6 @@
 package alex.dev.freshgoapp.app.navigation
 
+import alex.dev.freshgoapp.features.auth.presentation.screens.AuthScreen
 import alex.dev.freshgoapp.features.intro.presentation.screens.IntroScreen
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -13,8 +14,15 @@ fun NavigationGraph(startDestination: Screens = Screens.IntroScreen) {
         navController = navController,
         startDestination = startDestination
     ) {
-        composable<Screens.IntroScreen>{
-            IntroScreen()
+        composable<Screens.IntroScreen> {
+            IntroScreen(navigateToAuth = {
+                navController.navigate(Screens.AuthScreen) {
+                    popUpTo<Screens.IntroScreen> { inclusive = true }
+                }
+            })
+        }
+        composable<Screens.AuthScreen> {
+            AuthScreen()
         }
     }
 }

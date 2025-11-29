@@ -3,4 +3,6 @@
     <string name="intro_header">Не пора ли подкрепиться?</string>
     <string name="intro_subtext">Время покорить новые вкусовые вершины</string>
     <string name="intro_btn_text">Закажи вкусно</string>
+    <string name="signing_text">Войдите чтобы продолжить</string>
+    <string name="guest_signing_text">Продолжить как гость</string>
 </resources>
