@@ -1,10 +1,10 @@
-package alex.dev.freshgoapp.features.intro.presentation.screens
+package alex.dev.freshgoapp.app.presentation.screens.intro
 
 import alex.dev.freshgoapp.R
-import alex.dev.freshgoapp.features.intro.presentation.components.IntroButton
+import alex.dev.freshgoapp.app.presentation.components.IntroButton
+import alex.dev.freshgoapp.app.presentation.screens.auth.google.GoogleUiClient
 import alex.dev.freshgoapp.ui.theme.BrandYellow
 import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
-import alex.dev.freshgoapp.ui.theme.sentientVariable
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -34,12 +34,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.stephennnamani.burgerrestaurantapp.ui.theme.Resources
+import org.koin.compose.koinInject
 
 @Composable
 fun IntroScreen(
-    navigateToAuth: () -> Unit
+    navigateToAuth: () -> Unit,
+    navigateToHome: () -> Unit
 ) {
+    val googleAuthUiClient: GoogleUiClient = koinInject()
     val scale = remember { Animatable(0f) }
 
     LaunchedEffect(key1 = true, block = {
@@ -52,42 +54,62 @@ fun IntroScreen(
     })
     Box(
         modifier = Modifier
+            .fillMaxSize()
             .background(BrandYellow)
-            .navigationBarsPadding()
-            .systemBarsPadding()
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .navigationBarsPadding()
+                .systemBarsPadding()
                 .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.SpaceAround,
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
-                modifier = Modifier.padding(bottom = 100.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
                 Image(
                     painter = painterResource(Resources.Image.Logo),
                     contentDescription = "Application logo",
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .size(320.dp)
+                        .size(150.dp)
                         .scale(scale.value),
-                )
-                Text(
-                    text = stringResource(R.string.intro_header),
-                    fontFamily = oswaldVariableFont(),
-                    fontSize = 16.sp, fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
+                    text = stringResource(R.string.intro_header),
+                    fontFamily = oswaldVariableFont(),
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
                     text = stringResource(R.string.intro_subtext),
-                    fontFamily = sentientVariable(),
+                    fontFamily = oswaldVariableFont(),
+                    fontSize = 16.sp,
                     textAlign = TextAlign.Center,
+                    lineHeight = 16.sp
                 )
             }
-            IntroButton(onClick = { navigateToAuth() })
+
+
+            Column(
+                modifier = Modifier.padding(bottom = 20.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                IntroButton(onClick = {
+                    val user = googleAuthUiClient.currentUser
+                    if (user != null) {
+                        navigateToHome()
+                    } else {
+                        navigateToAuth()
+                    }
+                })
+            }
         }
     }
 }

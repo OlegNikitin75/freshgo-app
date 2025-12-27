@@ -5,4 +5,14 @@
     <string name="intro_btn_text">Закажи вкусно</string>
     <string name="signing_text">Войдите чтобы продолжить</string>
     <string name="guest_signing_text">Продолжить как гость</string>
+    <string name="server_client_id">514077843516-vua9kocc7v4n9vqo2jol4hprcl5pkd78.apps.googleusercontent.com</string>
+    <string name="error_unable_user">Не удалось создать нового пользователя</string>
+    <string name="error_failed_google">Не удалось войти с Google.</string>
+    <string name="error_signin">Ошибка входа.</string>
+    <string name="error_guest_signin">Не удалось войти в систему в качестве гостя.</string>
+    <string name="error_guest_signin_error">Ошибка входа в качестве гостя.</string>
+    <string name="bottom_bar_cart">Корзина</string>
+    <string name="bottom_bar_home">Главная</string>
+    <string name="bottom_bar_notification">Оповещения</string>
+    <string name="bottom_bar_categories">Категории</string>
 </resources>

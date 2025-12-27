@@ -1,4 +1,4 @@
-package alex.dev.freshgoapp.features.intro.presentation.components
+package alex.dev.freshgoapp.app.presentation.components
 
 import alex.dev.freshgoapp.R
 import alex.dev.freshgoapp.ui.theme.BrandBrown
@@ -23,7 +23,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.stephennnamani.burgerrestaurantapp.ui.theme.Resources
 
 @Composable
 fun IntroButton(
@@ -41,7 +40,7 @@ fun IntroButton(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(20.dp),
+                .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {

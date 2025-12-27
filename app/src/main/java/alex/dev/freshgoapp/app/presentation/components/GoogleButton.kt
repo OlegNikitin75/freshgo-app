@@ -1,4 +1,4 @@
-package alex.dev.freshgoapp.features.auth.presentation.components
+package alex.dev.freshgoapp.app.presentation.components
 
 import alex.dev.freshgoapp.ui.theme.BorderIdle
 import alex.dev.freshgoapp.ui.theme.FontSize
@@ -48,12 +48,8 @@ fun GoogleButton(
     progressIndicatorColor: Color = IconSecondary,
     onClick: () -> Unit
 ) {
-    var buttonText by remember { mutableStateOf(primaryText) }
-    LaunchedEffect(loading) {
-        buttonText = if (loading) secondaryText else primaryText
-    }
     Surface(
-        modifier = Modifier
+        modifier = modifier
             .clip(shape)
             .border(width = 1.dp, color = borderColor, shape = shape)
             .clickable(enabled = !loading) { onClick() },
@@ -67,27 +63,37 @@ fun GoogleButton(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {
-            AnimatedContent(
-                targetState = loading
-            ) { loadingState ->
-                if (!loadingState) {
-                    if (icon != null) {
-                        Icon(
-                            painter = icon,
-                            contentDescription = "Logo signing button",
-                            tint = Color.Unspecified
-                        )
-                    } else {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(24.dp),
-                            strokeWidth = 2.dp,
-                            color = progressIndicatorColor
-                        )
-                    }
+            // Показываем либо иконку, либо индикатор загрузки
+            if (loading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp),
+                    strokeWidth = 2.dp,
+                    color = progressIndicatorColor
+                )
+            } else {
+                icon?.let {
+                    Icon(
+                        painter = it,
+                        contentDescription = "Logo signing button",
+                        tint = Color.Unspecified,
+                        modifier = Modifier.size(24.dp)
+                    )
                 }
             }
+
             Spacer(modifier = Modifier.width(12.dp))
-            Text(text = buttonText, color = TextPrimary, fontSize = FontSize.REGULAR)
+
+            // Используем AnimatedContent для плавной смены текста
+            AnimatedContent(
+                targetState = loading,
+                label = "text animation"
+            ) { isLoading ->
+                Text(
+                    text = if (isLoading) secondaryText else primaryText,
+                    color = TextPrimary,
+                    fontSize = FontSize.REGULAR
+                )
+            }
         }
     }
 }

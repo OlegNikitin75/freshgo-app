@@ -1,4 +1,4 @@
-package alex.dev.freshgoapp.core.ui.componets
+package alex.dev.freshgoapp.app.presentation.components
 
 import alex.dev.freshgoapp.ui.theme.ButtonDisabled
 import alex.dev.freshgoapp.ui.theme.ButtonPrimary
@@ -40,7 +40,7 @@ fun PrimaryButton(
             disabledContainerColor = ButtonDisabled,
             disabledContentColor = TextPrimary.copy(0.5f)
         ),
-        contentPadding = PaddingValues(20.dp),
+        contentPadding = PaddingValues(16.dp),
     ) {
         Text(
             text = text,
