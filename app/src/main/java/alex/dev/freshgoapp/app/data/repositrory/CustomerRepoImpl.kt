@@ -2,9 +2,11 @@ package alex.dev.freshgoapp.app.data.repositrory
 
 import alex.dev.freshgoapp.app.domain.model.Customer
 import alex.dev.freshgoapp.app.domain.repository.CustomerRepository
+import alex.dev.freshgoapp.app.util.RequestState
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.tasks.await
 
@@ -30,5 +32,14 @@ class CustomerRepoImpl : CustomerRepository {
             docRef.set(customer).await()
         }
         Unit
+    }
+
+    override suspend fun sighOut(): RequestState<Unit> {
+        return try {
+            Firebase.auth.signOut()
+            RequestState.Success(Unit)
+        } catch (e: Exception) {
+            RequestState.Error("Error while signing out: ${e.message}")
+        }
     }
 }

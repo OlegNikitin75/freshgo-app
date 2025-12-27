@@ -1,7 +1,7 @@
 package alex.dev.freshgoapp.app.presentation.components
 
 import alex.dev.freshgoapp.ui.theme.BorderIdle
-import alex.dev.freshgoapp.ui.theme.FontSize
+import alex.dev.freshgoapp.app.presentation.theme.FontSize
 import alex.dev.freshgoapp.ui.theme.IconSecondary
 import alex.dev.freshgoapp.ui.theme.SurfaceLighter
 import alex.dev.freshgoapp.ui.theme.TextPrimary
@@ -22,11 +22,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip

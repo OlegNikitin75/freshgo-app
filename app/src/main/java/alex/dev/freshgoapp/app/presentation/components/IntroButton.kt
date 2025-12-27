@@ -1,10 +1,11 @@
 package alex.dev.freshgoapp.app.presentation.components
 
 import alex.dev.freshgoapp.R
+import alex.dev.freshgoapp.app.presentation.theme.Resources
 import alex.dev.freshgoapp.ui.theme.BrandBrown
-import alex.dev.freshgoapp.ui.theme.FontSize
+import alex.dev.freshgoapp.app.presentation.theme.FontSize
 import alex.dev.freshgoapp.ui.theme.TextWhite
-import alex.dev.freshgoapp.ui.theme.sentientVariable
+import alex.dev.freshgoapp.app.presentation.theme.sentientVariable
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

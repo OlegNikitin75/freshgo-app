@@ -3,7 +3,7 @@ package alex.dev.freshgoapp.app.presentation.components
 import alex.dev.freshgoapp.ui.theme.ButtonDisabled
 import alex.dev.freshgoapp.ui.theme.ButtonPrimary
 import alex.dev.freshgoapp.ui.theme.ButtonSecondary
-import alex.dev.freshgoapp.ui.theme.FontSize
+import alex.dev.freshgoapp.app.presentation.theme.FontSize
 import alex.dev.freshgoapp.ui.theme.TextPrimary
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer

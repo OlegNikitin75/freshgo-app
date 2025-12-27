@@ -1,6 +1,6 @@
 package alex.dev.freshgoapp.app.presentation.screens.home
 
-import Resources
+import alex.dev.freshgoapp.app.presentation.theme.Resources
 import alex.dev.freshgoapp.R
 import alex.dev.freshgoapp.app.presentation.navigation.Screens
 import androidx.annotation.StringRes

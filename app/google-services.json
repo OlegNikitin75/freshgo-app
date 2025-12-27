@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "514077843516",
+    "project_id": "freshgo-app-aefa6",
+    "storage_bucket": "freshgo-app-aefa6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514077843516:android:83d6c492c9cafee983a339",
+        "android_client_info": {
+          "package_name": "alex.dev.freshgoapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvsxQaYDj4a_9GjGAR6ftBPPtSqtvREYw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

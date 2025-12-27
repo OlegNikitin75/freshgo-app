@@ -12,7 +12,17 @@
     <string name="error_guest_signin">Не удалось войти в систему в качестве гостя.</string>
     <string name="error_guest_signin_error">Ошибка входа в качестве гостя.</string>
     <string name="bottom_bar_cart">Корзина</string>
-    <string name="bottom_bar_home">Главная</string>
+    <string name="bottom_bar_home">Меню</string>
     <string name="bottom_bar_notification">Оповещения</string>
     <string name="bottom_bar_categories">Категории</string>
+    <string name="drawer_profile">Профиль</string>
+    <string name="drawer_locations">Локация</string>
+    <string name="drawer_rewards">Награды</string>
+    <string name="drawer_offers">Предложения</string>
+    <string name="drawer_contacts">Контакты</string>
+    <string name="drawer_signout">Выйти</string>
+    <string name="user">Пользователь</string>
+    <string name="welcome">Привет, %1$s</string>
+    <string name="drawer_admin_panel">Админ панель</string>
+    <string name="error_while_signing_out">Ошибка при выходе из системы</string>
 </resources>

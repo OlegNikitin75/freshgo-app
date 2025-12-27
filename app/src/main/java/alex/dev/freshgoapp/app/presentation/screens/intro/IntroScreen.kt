@@ -3,8 +3,9 @@ package alex.dev.freshgoapp.app.presentation.screens.intro
 import alex.dev.freshgoapp.R
 import alex.dev.freshgoapp.app.presentation.components.IntroButton
 import alex.dev.freshgoapp.app.presentation.screens.auth.google.GoogleUiClient
+import alex.dev.freshgoapp.app.presentation.theme.Resources
 import alex.dev.freshgoapp.ui.theme.BrandYellow
-import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
+import alex.dev.freshgoapp.app.presentation.theme.oswaldVariableFont
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween

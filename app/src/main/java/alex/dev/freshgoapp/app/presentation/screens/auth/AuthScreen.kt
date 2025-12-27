@@ -4,9 +4,10 @@ import alex.dev.freshgoapp.R
 import alex.dev.freshgoapp.app.presentation.components.GoogleButton
 import alex.dev.freshgoapp.app.presentation.components.PrimaryButton
 import alex.dev.freshgoapp.app.presentation.screens.auth.google.GoogleUiClient
+import alex.dev.freshgoapp.app.presentation.theme.Resources
 import alex.dev.freshgoapp.app.util.RequestState
-import alex.dev.freshgoapp.ui.theme.FontSize
-import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
+import alex.dev.freshgoapp.app.presentation.theme.FontSize
+import alex.dev.freshgoapp.app.presentation.theme.oswaldVariableFont
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement

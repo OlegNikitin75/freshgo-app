@@ -5,6 +5,7 @@ import alex.dev.freshgoapp.app.data.repositrory.CustomerRepoImpl
 import alex.dev.freshgoapp.app.domain.repository.CustomerRepository
 import alex.dev.freshgoapp.app.presentation.screens.auth.AuthViewModel
 import alex.dev.freshgoapp.app.presentation.screens.auth.google.GoogleUiClient
+import alex.dev.freshgoapp.app.presentation.screens.home.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -14,6 +15,7 @@ val appModule = module {
     single<FirebaseAuth> { FirebaseAuth.getInstance() }
     single<CustomerRepository> { CustomerRepoImpl() }
     viewModel { AuthViewModel(get()) }
+    viewModel { HomeViewModel(get()) }
     single {
         GoogleUiClient(
             context = androidContext(),
