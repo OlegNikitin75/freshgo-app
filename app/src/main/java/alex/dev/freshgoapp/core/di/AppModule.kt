@@ -15,9 +15,7 @@ val appModule = module {
     single<FirebaseAuth> { FirebaseAuth.getInstance() }
     single<CustomerRepository> { CustomerRepoImpl() }
     viewModel {
-        AuthViewModel(
-            get(),
-            auth = get()
+        AuthViewModel(get(),
         )
     }
     viewModel { HomeViewModel(get()) }

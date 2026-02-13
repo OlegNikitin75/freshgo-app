@@ -7,6 +7,7 @@ import alex.dev.freshgoapp.feature.components.GoogleButton
 import alex.dev.freshgoapp.feature.components.PrimaryButton
 import alex.dev.freshgoapp.ui.theme.FontSize
 import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
+import alex.dev.freshgoapp.util.RequestState
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -20,9 +21,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -30,7 +33,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.launch
 import kotlinx.io.IOException
 import org.koin.androidx.compose.koinViewModel
@@ -46,23 +48,9 @@ fun AuthScreen(
     val scope = rememberCoroutineScope()
     val authViewModel: AuthViewModel = koinViewModel()
     val googleUiClient: GoogleUiClient = koinInject()
-    val uiEvent by authViewModel.uiEvent.collectAsStateWithLifecycle()
-    val loading = uiEvent is AuthUiEvent.Loading
+    var loadingState by remember { mutableStateOf(false) }
 
-    LaunchedEffect(uiEvent) {
-        when (uiEvent) {
-            is AuthUiEvent.Success -> {
-                navigateToHome()
-                authViewModel.consumeEvent()
-            }
 
-            is AuthUiEvent.Error -> {
-                authViewModel.consumeEvent()
-            }
-
-            else -> Unit
-        }
-    }
 
 
 
@@ -93,24 +81,28 @@ fun AuthScreen(
                 )
             }
             GoogleButton(
-                loading = loading,
+                loading = loadingState,
                 onClick = {
                     scope.launch {
-                        authViewModel.startLoading()
+                        loadingState = true
                         try {
                             val authResult = googleUiClient.signInWithGoogle(activity)
                             val user = authResult.user
                             if (user != null) {
-                                authViewModel.onFirebaseUserSignIn(user)
+                                authViewModel.createCustomer(
+                                    user = user,
+                                    onSuccess = { RequestState.Success(user) },
+                                    onError = { RequestState.Error("Unable to create new user") }
+                                )
                                 navigateToHome()
                             } else {
-                                authViewModel.emitError("Google sign-in failed")
+                                RequestState.Error("Google sign-in failed")
                             }
                         } catch (e: CancellationException) {
                         } catch (e: IOException) {
-                            authViewModel.emitError("No internet connection")
+                            RequestState.Error("No internet connection")
                         } catch (e: Exception) {
-                            authViewModel.emitError("Sign-in failed. Please try again.")
+                            RequestState.Error("Sign-in failed. Please try again.")
                         }
                     }
                 },
@@ -122,21 +114,24 @@ fun AuthScreen(
                 icon = painterResource(Resources.Icon.Login),
                 onClick = {
                     scope.launch {
-                        authViewModel.startLoading()
                         try {
                             val guestResult = googleUiClient.guestSignIn()
                             val user = guestResult.user
                             if (user != null) {
-                                authViewModel.onFirebaseUserSignIn(user)
+                                authViewModel.createCustomer(
+                                    user = user,
+                                    onSuccess = { RequestState.Success(user) },
+                                    onError = { RequestState.Error("Unable to create new user") }
+                                )
                                 navigateToHome()
                             } else {
-                                authViewModel.emitError("Guest sign-in failed")
+                                RequestState.Error("Guest sign-in failed")
                             }
                         } catch (e: CancellationException) {
                         } catch (e: IOException) {
-                            authViewModel.emitError("No internet connection")
+                            RequestState.Error("No internet connection")
                         } catch (e: Exception) {
-                            authViewModel.emitError("Sign-in failed. Please try again.")
+                            RequestState.Error("Sign-in failed. Please try again.")
                         }
                     }
                 }

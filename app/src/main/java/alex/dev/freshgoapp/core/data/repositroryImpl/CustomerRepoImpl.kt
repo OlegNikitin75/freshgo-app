@@ -18,7 +18,9 @@ class CustomerRepoImpl : CustomerRepository {
 
     override suspend fun createCustomer(
         user: FirebaseUser,
-    ): Result<Unit> = runCatching {
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    ) {
         val customerCollection = Firebase.firestore.collection("customer")
         val docRef = customerCollection.document(user.uid)
         val snapshot = docRef.get().await()

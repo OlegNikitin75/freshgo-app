@@ -7,7 +7,11 @@ import kotlinx.coroutines.flow.Flow
 
 interface CustomerRepository {
     fun getCurrentUserId(): String?
-    suspend fun createCustomer(user: FirebaseUser): Result<Unit>
+    suspend fun createCustomer(
+        user: FirebaseUser,
+        onSuccess: () -> Unit,
+        onError: (String) -> Unit
+    )
 
     suspend fun readCustomerFlow(): Flow<RequestState<Customer>>
     suspend fun updatedCustomer(
