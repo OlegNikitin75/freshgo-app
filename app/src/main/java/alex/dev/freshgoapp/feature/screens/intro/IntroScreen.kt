@@ -1,12 +1,11 @@
 package alex.dev.freshgoapp.feature.screens.intro
 
 import alex.dev.freshgoapp.R
-import alex.dev.freshgoapp.feature.components.IntroButton
-import alex.dev.freshgoapp.core.data.auth.GoogleUiClient
 import alex.dev.freshgoapp.app.feature.theme.Resources
+import alex.dev.freshgoapp.core.data.auth.GoogleUiClient
+import alex.dev.freshgoapp.feature.components.IntroButton
 import alex.dev.freshgoapp.ui.theme.BrandYellow
 import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
-import android.util.Log
 import android.view.animation.OvershootInterpolator
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -74,9 +73,8 @@ fun IntroScreen(
                 verticalArrangement = Arrangement.Center
             ) {
                 Image(
-                    painter = painterResource(Resources.Image.Logo),
-                    contentDescription = "Application logo",
-                    contentScale = ContentScale.Fit,
+                    painter = painterResource(Resources.Image.LogoLM),
+                    contentDescription = "Application logo", contentScale = ContentScale.Fit,
                     modifier = Modifier
                         .size(150.dp)
                         .scale(scale.value),
@@ -105,7 +103,6 @@ fun IntroScreen(
             ) {
                 IntroButton(onClick = {
                     val user = googleAuthUiClient.currentUser
-                    Log.d("introUser", "IntroScreen:$user ")
                     if (user == null) {
                         navigateToAuth()
                     } else {

@@ -10,6 +10,7 @@ import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
 import alex.dev.freshgoapp.util.RequestState
 import android.app.Activity
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -49,7 +50,7 @@ fun AuthScreen(
     val authViewModel: AuthViewModel = koinViewModel()
     val googleUiClient: GoogleUiClient = koinInject()
     var loadingState by remember { mutableStateOf(false) }
-
+    val isDarkMode: Boolean = isSystemInDarkTheme()
 
 
 
@@ -69,7 +70,9 @@ fun AuthScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
-                    painter = painterResource(Resources.Image.Logo),
+                    painter = if (isDarkMode) (painterResource(Resources.Image.LogoDM)) else (painterResource(
+                        Resources.Image.LogoLM
+                    )),
                     contentDescription = "Signing logo",
                     contentScale = ContentScale.Fit,
                     modifier = Modifier.size(180.dp)

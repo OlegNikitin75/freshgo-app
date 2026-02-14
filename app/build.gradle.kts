@@ -86,6 +86,8 @@ dependencies {
     implementation("io.coil-kt.coil3:coil-network-okhttp:3.3.0")
     // Coroutines
     implementation(libs.kotlinx.coroutines.android)
+    //Splashscreen
+    implementation("androidx.core:core-splashscreen:1.2.0")
 
 
 

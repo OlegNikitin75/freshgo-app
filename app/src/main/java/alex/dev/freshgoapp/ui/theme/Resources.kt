@@ -32,7 +32,8 @@ object Resources {
         val Login = R.drawable.log_in
     }
     object Image {
-        val Logo = R.drawable.logo
+        val LogoLM = R.drawable.ic_logo_lm
+        val LogoDM = R.drawable.ic_logo_dm
         val ShoppingCart = R.drawable.shopping_cart_image
         val Checkmark = R.drawable.checkmark_image
         val Cat = R.drawable.cat
