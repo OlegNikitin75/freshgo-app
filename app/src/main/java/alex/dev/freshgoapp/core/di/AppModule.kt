@@ -6,6 +6,7 @@ import alex.dev.freshgoapp.core.data.repository.CustomerRepository
 import alex.dev.freshgoapp.core.data.repositroryImpl.CustomerRepoImpl
 import alex.dev.freshgoapp.feature.screens.auth.AuthViewModel
 import alex.dev.freshgoapp.feature.screens.home.HomeViewModel
+import alex.dev.freshgoapp.feature.screens.profile.ProfileScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -19,6 +20,7 @@ val appModule = module {
         )
     }
     viewModel { HomeViewModel(get()) }
+    viewModel { ProfileScreenViewModel(get()) }
     single {
         GoogleUiClient(
             context = androidContext(),

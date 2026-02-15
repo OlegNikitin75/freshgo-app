@@ -1,13 +1,14 @@
 package alex.dev.freshgoapp.feature.components
 
-import alex.dev.freshgoapp.ui.theme.FontSize
-import alex.dev.freshgoapp.util.Alpha
 import alex.dev.freshgoapp.ui.theme.BorderError
 import alex.dev.freshgoapp.ui.theme.BorderIdle
+import alex.dev.freshgoapp.ui.theme.FontSize
 import alex.dev.freshgoapp.ui.theme.IconSecondary
 import alex.dev.freshgoapp.ui.theme.SurfaceDarker
 import alex.dev.freshgoapp.ui.theme.SurfaceLighter
 import alex.dev.freshgoapp.ui.theme.TextPrimary
+import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
+import alex.dev.freshgoapp.util.Alpha
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -49,9 +50,15 @@ fun AppTextField(
         enabled = enabled,
         value = value,
         onValueChange = onValueChange,
-        placeholder = if (placeholder != null) {
-            { Text(text = placeholder, fontSize = FontSize.REGULAR) }
-        } else null,
+        placeholder = placeholder?.let {
+            {
+                Text(
+                    text = placeholder,
+                    fontFamily = oswaldVariableFont(),
+                    fontSize = FontSize.REGULAR
+                )
+            }
+        },
         singleLine = !expanded,
         shape = RoundedCornerShape(6.dp),
         keyboardOptions = keyboardOptions,

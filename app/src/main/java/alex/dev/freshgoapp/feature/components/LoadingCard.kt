@@ -15,12 +15,12 @@ fun LoadingCard(
     modifier: Modifier = Modifier
 ) {
     Box(
-        modifier=modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
-    ){
+    ) {
         CircularProgressIndicator(
-            modifier=Modifier.size(24.dp),
-            color= IconTertiary,
+            modifier = Modifier.size(24.dp),
+            color = IconTertiary,
             strokeWidth = 2.dp
         )
     }

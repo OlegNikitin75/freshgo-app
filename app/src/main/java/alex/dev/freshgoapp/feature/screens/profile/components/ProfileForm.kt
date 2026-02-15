@@ -23,8 +23,8 @@ fun ProfileForm(
     city: String?,
     onCityChange: (String) -> Unit,
     postalCode: Int?,
-    onPostalCodeChange: (String) -> Unit,
-    address: String,
+    onPostalCodeChange: (Int?) -> Unit,
+    address: String?,
     onAddressChange: (String) -> Unit,
     phoneNumber: String?,
     onPhoneNumberChange: (String) -> Unit,
@@ -61,19 +61,19 @@ fun ProfileForm(
         )
         AppTextField(
             value = "${postalCode ?: ""}",
-            onValueChange = onPostalCodeChange,
+            onValueChange = { onPostalCodeChange(it.toIntOrNull()) },
             placeholder = "Индекс",
-            error = postalCode == null || postalCode.toString().length !in 3..8,
+            error = postalCode?.toString()?.length !in 3..8,
             keyboardOptions = KeyboardOptions(
                 keyboardType =
                     KeyboardType.Number
             )
         )
         AppTextField(
-            value = address,
+            value = address ?: "",
             onValueChange = onAddressChange,
             placeholder = "Адрес",
-            error = address.length !in 3..50
+            error = address?.length !in 3..50
         )
         AppTextField(
             value = phoneNumber ?: "",
