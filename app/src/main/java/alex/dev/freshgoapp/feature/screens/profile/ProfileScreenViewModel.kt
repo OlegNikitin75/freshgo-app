@@ -49,6 +49,7 @@ class ProfileScreenViewModel(
                         city = fetched.city,
                         address = fetched.address,
                         phoneNumber = fetched.phoneNumber,
+                        postalCode = fetched.postalCode,
                         avatarUrl = fetched.avatarUrl,
                     )
                     screenReady = RequestState.Success(Unit)
@@ -109,6 +110,7 @@ class ProfileScreenViewModel(
                     city = screenState.city,
                     address = screenState.address,
                     phoneNumber = screenState.phoneNumber,
+                    postalCode = screenState.postalCode,
                     avatarUrl = screenState.avatarUrl,
                 ),
                 onSuccess = onSuccess,
