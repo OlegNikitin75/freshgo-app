@@ -8,15 +8,34 @@ import alex.dev.freshgoapp.feature.screens.auth.AuthViewModel
 import alex.dev.freshgoapp.feature.screens.home.HomeViewModel
 import alex.dev.freshgoapp.feature.screens.profile.ProfileScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
+import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 val appModule = module {
+    single {
+        OkHttpClient.Builder()
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+    single {
+        Retrofit.Builder()
+            .baseUrl("https://restcountries.com/")
+            .client(get())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
     single<FirebaseAuth> { FirebaseAuth.getInstance() }
     single<CustomerRepository> { CustomerRepoImpl() }
     viewModel {
-        AuthViewModel(get(),
+        AuthViewModel(
+            get(),
         )
     }
     viewModel { HomeViewModel(get()) }

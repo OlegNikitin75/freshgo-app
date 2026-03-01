@@ -89,7 +89,11 @@ dependencies {
     //Splashscreen
     implementation("androidx.core:core-splashscreen:1.2.0")
 
-
+    //Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation ("com.squareup.okhttp3:okhttp3:5.0.0-alpha2")
+    implementation ("com.squareup.retrofit2:converter-gson:3.0.0")
+    implementation ("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:1.0.0")
 
 
     implementation("androidx.credentials:credentials:1.2.2")
