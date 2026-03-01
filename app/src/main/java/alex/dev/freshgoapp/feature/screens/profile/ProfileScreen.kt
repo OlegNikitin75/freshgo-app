@@ -1,6 +1,8 @@
 package alex.dev.freshgoapp.feature.screens.profile
 
 import alex.dev.freshgoapp.app.feature.theme.Resources
+import alex.dev.freshgoapp.feature.components.InfoCard
+import alex.dev.freshgoapp.feature.components.LoadingCard
 import alex.dev.freshgoapp.feature.components.PrimaryButton
 import alex.dev.freshgoapp.feature.screens.profile.components.ProfileForm
 import alex.dev.freshgoapp.ui.theme.FontSize
@@ -8,6 +10,7 @@ import alex.dev.freshgoapp.ui.theme.IconPrimary
 import alex.dev.freshgoapp.ui.theme.Surface
 import alex.dev.freshgoapp.ui.theme.TextPrimary
 import alex.dev.freshgoapp.ui.theme.oswaldVariableFont
+import alex.dev.freshgoapp.util.DisplayResult
 import alex.dev.freshgoapp.util.RequestState
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -24,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -79,46 +83,64 @@ fun ProfileScreen(
                 .padding(paddingValues)
                 .imePadding()
         ) {
-            ProfileForm(
-                modifier = Modifier.weight(1f),
-                firstName = screenState.firstName,
-                onFirstNameChange = profileScreenViewModel::updateFirstName,
-                lastName = screenState.lastName,
-                onLastNameChange = profileScreenViewModel::updateLastName,
-                email = screenState.email,
-                city = screenState.city,
-                onCityChange = profileScreenViewModel::updateCity,
-                postalCode = screenState.postalCode,
-                onPostalCodeChange = profileScreenViewModel::updatePostalCode,
-                address = screenState.address,
-                onAddressChange = profileScreenViewModel::updateAddress,
-                phoneNumber = screenState.phoneNumber?.number,
-                onPhoneNumberChange = profileScreenViewModel::updatePhoneNumber
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            PrimaryButton(
-                text = "Обновить профиль",
-                icon = painterResource(Resources.Icon.Checkmark),
-                enabled = isFormValid,
-                onClick = {
-                    profileScreenViewModel.onSubmitAttempt()
-                    profileScreenViewModel.updateCustomer(
-                        onSuccess = {
-                            RequestState.Success("Профиль пользователя обновлен!")
-                            Toast.makeText(
-                                context,
-                                "Профиль пользователя обновлен!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        },
-                        onError = { message ->
-                            RequestState.Error("Ошибка обновления профиля.")
-                            Toast.makeText(
-                                context,
-                                "Ошибка обновления профиля.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+            screenReady.DisplayResult(
+                onLoading = { LoadingCard(modifier = Modifier.fillMaxSize()) },
+                onSuccess = {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        ProfileForm(
+                            modifier = Modifier.weight(1f),
+                            isLoading = screenReady.isLoading(),
+                            firstName = screenState.firstName,
+                            onFirstNameChange = profileScreenViewModel::updateFirstName,
+                            lastName = screenState.lastName,
+                            onLastNameChange = profileScreenViewModel::updateLastName,
+                            email = screenState.email,
+                            city = screenState.city,
+                            onCityChange = profileScreenViewModel::updateCity,
+                            postalCode = screenState.postalCode,
+                            onPostalCodeChange = profileScreenViewModel::updatePostalCode,
+                            address = screenState.address,
+                            onAddressChange = profileScreenViewModel::updateAddress,
+                            phoneNumber = screenState.phoneNumber?.number,
+                            onPhoneNumberChange = profileScreenViewModel::updatePhoneNumber
+                        )
+                        Spacer(modifier = Modifier.height(16.dp))
+                        PrimaryButton(
+                            text = "Обновить профиль",
+                            icon = painterResource(Resources.Icon.Checkmark),
+                            enabled = isFormValid,
+                            onClick = {
+                                profileScreenViewModel.onSubmitAttempt()
+                                profileScreenViewModel.updateCustomer(
+                                    onSuccess = {
+                                        RequestState.Success("Профиль пользователя обновлен!")
+                                        Toast.makeText(
+                                            context,
+                                            "Профиль пользователя обновлен!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    },
+                                    onError = { message ->
+                                        RequestState.Error("Ошибка обновления профиля.")
+                                        Toast.makeText(
+                                            context,
+                                            "Ошибка обновления профиля.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                )
+                            }
+                        )
+                    }
+                },
+                onError = { message ->
+                    InfoCard(
+                        image = Resources.Image.UserProfileNotFound,
+                        title = "Упс!",
+                        subtitle = message
                     )
                 }
             )

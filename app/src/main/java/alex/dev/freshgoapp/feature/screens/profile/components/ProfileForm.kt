@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ProfileForm(
     modifier: Modifier = Modifier,
+    isLoading:Boolean,
     firstName: String,
     onFirstNameChange: (String) -> Unit,
     lastName: String,
@@ -36,30 +37,35 @@ fun ProfileForm(
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         AppTextField(
+            isLoading=isLoading,
             value = firstName,
             onValueChange = onFirstNameChange,
             placeholder = "Имя",
             error = firstName.length !in 3..20
         )
         AppTextField(
+            isLoading=isLoading,
             value = lastName,
             onValueChange = onLastNameChange,
             placeholder = "Фамилия",
             error = lastName.length !in 3..20
         )
         AppTextField(
+            isLoading=isLoading,
             value = email,
             onValueChange = {},
             placeholder = "Электронная почта",
             enabled = false
         )
         AppTextField(
+            isLoading=isLoading,
             value = city ?: "",
             onValueChange = onCityChange,
             placeholder = "Город",
             error = city?.length !in 3..20
         )
         AppTextField(
+            isLoading=isLoading,
             value = "${postalCode ?: ""}",
             onValueChange = { onPostalCodeChange(it.toIntOrNull()) },
             placeholder = "Индекс",
@@ -70,16 +76,18 @@ fun ProfileForm(
             )
         )
         AppTextField(
+            isLoading=isLoading,
             value = address ?: "",
             onValueChange = onAddressChange,
             placeholder = "Адрес",
             error = address?.length !in 3..50
         )
         AppTextField(
+            isLoading=isLoading,
             value = phoneNumber ?: "",
             onValueChange = onPhoneNumberChange,
             placeholder = "Телефон",
-            error = phoneNumber.toString().length !in 3..20,
+            error = phoneNumber?.length !in 3..20,
             keyboardOptions = KeyboardOptions(
                 keyboardType =
                     KeyboardType.Number

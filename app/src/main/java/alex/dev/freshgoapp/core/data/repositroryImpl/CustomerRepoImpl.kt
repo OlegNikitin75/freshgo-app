@@ -10,7 +10,9 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
 import com.google.firebase.firestore.firestore
 import com.google.firebase.firestore.snapshots
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.tasks.await
@@ -44,55 +46,58 @@ class CustomerRepoImpl : CustomerRepository {
         }
     }
 
-    override fun readCustomerFlow(): Flow<RequestState<Customer>> = channelFlow {
-        try {
-            val userId = getCurrentUserId()
-            if (userId != null) {
-                val database = Firebase.firestore
-                database.collection("customer")
-                    .document(userId)
-                    .snapshots()
-                    .collectLatest { documentSnapshot ->
-                        if (documentSnapshot.exists()) {
-                            val customer = Customer(
-                                id = documentSnapshot.id,
-                                firstName = documentSnapshot.getString("firstName") ?: "",
-                                lastName = documentSnapshot.getString("lastName") ?: "",
-                                email = documentSnapshot.getString("email") ?: "",
-                                city = documentSnapshot.getString("city"),
-                                address = documentSnapshot.getString("address"),
-                                country = documentSnapshot.getString("country"),
-                                avatarUrl = documentSnapshot.getString("avatarUrl")
-                                    ?: documentSnapshot.getString("photoUrl")
-                                    ?: "",
-                                postalCode = when (val value = documentSnapshot.get("postalCode")) {
-                                    is String -> value.toIntOrNull()
-                                    is Number -> value.toInt()
-                                    is Long -> value.toInt()
-                                    else -> null
-                                },
-                                phoneNumber = (documentSnapshot.get("phoneNumber") as? Map<*, *>)?.let { map ->
-                                    val dialCode = (map["CountryCode"] as? Number)?.toInt()
-                                        ?: (map["dialCode"] as? Number)?.toInt()
-                                        ?: (map["code"] as? Number)?.toInt()
-                                    val number = map["number"] as? String
-                                    if (dialCode != null && !number.isNullOrBlank()) {
-                                        PhoneNumber(dialCode, number)
-                                    } else null
-                                }
-                            )
-
-                            send(RequestState.Success(customer))
-                        }
-                    }
-            } else {
-                send(RequestState.Error("Пользователь не доступен"))
-            }
-        } catch (e: Exception) {
-            send(RequestState.Error(message = "Ошибка при обработке информации о клиенте: ${e.message}"))
+    override fun readCustomerFlow(): Flow<RequestState<Customer>> = callbackFlow {
+        val userId = getCurrentUserId()
+        if (userId == null) {
+            trySend(RequestState.Error("Пользователь не авторизован"))
+            close()
+            return@callbackFlow
         }
-    }
 
+        val docRef = Firebase.firestore.collection("customer").document(userId)
+
+        val listener = docRef.addSnapshotListener { snapshot, error ->
+            when {
+                error != null -> {
+                    trySend(RequestState.Error("Ошибка слушателя Firestore: ${error.message}"))
+                }
+                snapshot != null -> {
+                    if (snapshot.exists()) {
+                        val customer = Customer(
+                            id = snapshot.id,
+                            firstName = snapshot.getString("firstName") ?: "",
+                            lastName = snapshot.getString("lastName") ?: "",
+                            email = snapshot.getString("email") ?: "",
+                            city = snapshot.getString("city"),
+                            address = snapshot.getString("address"),
+                            postalCode = snapshot.get("postalCode")?.let { v ->
+                                when (v) {
+                                    is String -> v.toIntOrNull()
+                                    is Number -> v.toInt()
+                                    else -> null
+                                }
+                            },
+                            phoneNumber = (snapshot.get("phoneNumber") as? Map<*, *>)?.let { map ->
+                                val dial = (map["dialCode"] as? Number)?.toInt()
+                                    ?: (map["CountryCode"] as? Number)?.toInt()
+                                val num = map["number"] as? String
+                                if (dial != null && !num.isNullOrBlank()) PhoneNumber(dial, num) else null
+                            },
+                            avatarUrl = snapshot.getString("avatarUrl") ?: "",
+                        )
+                        trySend(RequestState.Success(customer))
+                    } else {
+                        trySend(RequestState.Error("Профиль не найден"))
+                    }
+                }
+                else -> {
+                    trySend(RequestState.Error("Снапшот null"))
+                }
+            }
+        }
+
+        awaitClose { listener.remove() }
+    }
     override suspend fun updatedCustomer(
         customer: Customer,
         onSuccess: () -> Unit,

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun AppTextField(
     modifier: Modifier = Modifier,
+    isLoading: Boolean,
     value: String,
     onValueChange: (String) -> Unit,
     placeholder: String? = null,
@@ -40,7 +41,7 @@ fun AppTextField(
     )
 ) {
     val borderColor by animateColorAsState(
-        targetValue = if (error) BorderError else BorderIdle
+        targetValue = if (error && !isLoading) BorderError else BorderIdle
     )
     TextField(
         modifier = modifier

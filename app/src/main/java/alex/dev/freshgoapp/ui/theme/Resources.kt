@@ -39,5 +39,6 @@ object Resources {
         val Cat = R.drawable.cat
         val GoogleLogo = R.drawable.google_logo
         val PaypalLogo = R.drawable.paypal_logo
+        val UserProfileNotFound = R.drawable.user_profile_not_found
     }
 }
